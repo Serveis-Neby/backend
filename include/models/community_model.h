@@ -21,7 +21,8 @@ class CommunityModel {
 	static std::string generate_community_code();
 
 	static CommunityModel create_community(pqxx::connection& db, std::string community_name);
-	static std::string get_community_id(pqxx::connection &db, std::string community_code);
+	static std::string get_community_id(pqxx::connection& db, std::string community_code);
+	static bool comunity_exist(pqxx::connection& db, std::string community_name);
 };
 
 #endif

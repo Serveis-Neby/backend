@@ -70,3 +70,19 @@ std::string CommunityModel::get_community_name() const {
 std::string CommunityModel::get_community_code() const {
 	return _community_code;
 }
+
+bool CommunityModel::comunity_exist(pqxx::connection& db, std::string community_name) {
+	try {
+		pqxx::work txn(db);
+
+		pqxx::result result = txn.exec_params("SELECT community_name FROM communities WHERE community_name = $1", community_name);
+
+		bool communityExists = !result.empty() && !result[0][0].is_null();
+
+		txn.commit();
+
+		return communityExists;
+	} catch (const std::exception& e) {
+		return false;
+	}
+}
